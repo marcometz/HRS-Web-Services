@@ -1,20 +1,13 @@
 = Credentials
-	
-Depending on Savon
-https://github.com/rubiii/savon
-
-Doku of Savon 
-http://rubiii.github.com/savon/
+Depending on Savon https://github.com/rubiii/savon
+Doku of Savon http://rubiii.github.com/savon/
 
 = Warning
-
 THIS IS CURRENTLY UNDER DEVELOPMENT 
-and should by ready within next wekk
+and should by ready within next week
 
 = First steps
-Your Webservers IP has to be registered at HRS.
-=> mail to support@hrs.com
-
+Your Webservers IP has to be registered at HRS. Send a mail to support@hrs.com
 
 = Usage
 
