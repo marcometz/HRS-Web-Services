@@ -1,21 +1,25 @@
-
+= Credentials
+	
 Depending on Savon
 https://github.com/rubiii/savon
 
 Doku of Savon 
 http://rubiii.github.com/savon/
 
+= Warning
 
+THIS IS CURRENTLY UNDER DEVELOPMENT 
+and should by ready within next wekk
 
-== Warning ==
+= First steps
 Your Webservers IP has to be registered at HRS.
- => mail to support@hrs.com
+=> mail to support@hrs.com
 
 
-== Usage ==
+= Usage
 
 To initialize a new Service
-* hrs = HRS::Service.new
+	hrs = HRS::Service.new
 
 This will start a new Service with your current Rails Environment ("production" || "development/test")
 on the different HRS Servers 
@@ -23,15 +27,18 @@ on the different HRS Servers
 	ProductionServer = "http://p-service.hrs.com:8080"
 
 you can overwrite this by calling: 
-* hrs = HRS::Service.new(args)
+	hrs = HRS::Service.new(args)
 
 with args folloing Options:
-HRS::Service.new({:env => "production", :version => "014"})
+	HRS::Service.new({:env => "production", :version => "014"})
+	
 	:env	   	=> which Server to use (production or test)
 	:version	=> which version of WebService you want to use (Default "014" - 17. Feb 2011 )
 	...
 	
+Methods:
+
+	hrs.ping  => true/false 	if Connection to HRS ist established and ready to use
 
 
-hrs.ping  => true/false 	if Connection to HRS ist established and ready to use
 
