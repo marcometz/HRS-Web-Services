@@ -7,18 +7,31 @@ http://rubiii.github.com/savon/
 
 
 
+== Warning ==
+Your Webservers IP has to be registered at HRS.
+ => mail to support@hrs.com
+
 
 == Usage ==
 
-
+To initialize a new Service
 * hrs = HRS::Service.new
-Will start a new Service with your current Rails Environment ("production" || "development/test")
-with a different HRS Server 
+
+This will start a new Service with your current Rails Environment ("production" || "development/test")
+on the different HRS Servers 
 	TestServer = "http://iut-service.hrs.com:8080"
 	ProductionServer = "http://p-service.hrs.com:8080"
 
-you can overwrite this Version by calling: 
-hrs = HRS::Service.new(args) with args folloing Options:
-	{:env => "production",
-	:version => "014"}
+you can overwrite this by calling: 
+* hrs = HRS::Service.new(args)
+
+with args folloing Options:
+HRS::Service.new({:env => "production", :version => "014"})
+	:env	   	=> which Server to use (production or test)
+	:version	=> which version of WebService you want to use (Default "014" - 17. Feb 2011 )
+	...
 	
+
+
+hrs.ping  => true/false 	if Connection to HRS ist established and ready to use
+
