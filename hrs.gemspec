@@ -23,6 +23,8 @@ Gem::Specification.new do |s|
   s.rubygems_version = %q{1.4.2}
   s.summary = %q{HRS WEB Service}
 
+  s.add_dependency "savon"
+  
   if s.respond_to? :specification_version then
     s.specification_version = 3
 

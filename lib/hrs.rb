@@ -1,3 +1,3 @@
 module Hrs
-   require 'hrs/engine' if defined?(Rails)
+   require 'hrs/service' if defined?(Rails)
 end
