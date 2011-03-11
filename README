@@ -1,0 +1,24 @@
+
+Depending on Savon
+https://github.com/rubiii/savon
+
+Doku of Savon 
+http://rubiii.github.com/savon/
+
+
+
+
+== Usage ==
+
+
+* hrs = HRS::Service.new
+Will start a new Service with your current Rails Environment ("production" || "development/test")
+with a different HRS Server 
+	TestServer = "http://iut-service.hrs.com:8080"
+	ProductionServer = "http://p-service.hrs.com:8080"
+
+you can overwrite this Version by calling: 
+hrs = HRS::Service.new(args) with args folloing Options:
+	{:env => "production",
+	:version => "014"}
+	

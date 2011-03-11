@@ -1,7 +1,7 @@
 begin
   require "jeweler"
   Jeweler::Tasks.new do |gem|
-    gem.name = "hrs"
+    gem.name = "HRS"
     gem.author = "Marco Metz"
     gem.summary = "HRS WEB Service"
     gem.description = "API for the HRSServices v14"
