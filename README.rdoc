@@ -23,10 +23,10 @@ you can overwrite this by calling:
 	hrs = HRS::Service.new(args)
 
 with args folloing Options:
-	HRS::Service.new({:env => "production", :version => "014"})
+	HRS::Service.new({:env => "production", :version => "015"})
 	
 	:env	   	=> which Server to use (production or test)
-	:version	=> which version of WebService you want to use (Default "014" - 17. Feb 2011 )
+	:version	=> which version of WebService you want to use (Default "015" - 01.03.2011 )
 	...
 	
 Methods:

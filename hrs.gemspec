@@ -23,7 +23,9 @@ Gem::Specification.new do |s|
   s.rubygems_version = %q{1.4.2}
   s.summary = %q{HRS WEB Service}
 
-  s.add_dependency "savon"
+  s.add_dependency "httpclient"
+  s.add_dependency('httpi', '= 0.7.9')
+  s.add_dependency("savon", '= 0.8.5')
   
   if s.respond_to? :specification_version then
     s.specification_version = 3
