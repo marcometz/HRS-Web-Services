@@ -31,7 +31,7 @@ with args folloing Options:
 	
 Methods:
 
-	hrs.ping  => true/false 	if Connection to HRS ist established and ready to use
-
+	hrs.ping  =>  Savon::SOAP::Response 	if Connection to HRS ist established and ready to use
+	hrs.search_locations("Berlin")  =>  Savon::SOAP::Response 	List of all found Locations and aditional Data
 
 

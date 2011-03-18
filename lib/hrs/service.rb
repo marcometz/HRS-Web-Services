@@ -58,7 +58,7 @@ module HRS
     end
     
     
-    def search_location(city)
+    def search_locations(city)
       data = "<fuzzySearch xmlns:xsi='...' xsi:nil='true' />"
       data += content_tag("locationName", city)
       data += content_tag("locationLanguage", content_tag("iso3Language", Iso3Language))
