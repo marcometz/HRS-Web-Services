@@ -47,5 +47,8 @@ Get a list of locations like:
 Search for all Hotels nearby a location (Access may be restricted):
 	hrs.search_hotels(location_id, perimeter=1000, maxResults=0, minAverageRating=0, minCategory=0)
 	
-Get available Hotels for a location and a time span:
-	hrs.available_hotels(location_id, from_date, to_date, perimeter=1000, maxResults=0, minCategory=0, roomType="single", adultCount=1, orderKey="price", orderDirection="ascending" )  => with from_date, to_date format of "2011-12-30"
+Get available Hotels for a location and a time span with from_date/to_date format of "2011-12-30":
+	hrs.available_hotels(location_id, from_date, to_date, perimeter=1000, maxResults=0, minCategory=0, roomType="single", adultCount=1, orderKey="price", orderDirection="ascending" ) 
+
+Get detailed hotel information 
+	hotel_availabilty(hotel_key, from_date, to_date, roomType, adultCount)

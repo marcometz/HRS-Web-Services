@@ -4,8 +4,7 @@ require "savon"
 
 module HRS
   class Service < Rails::Engine
-    #include ActionView::Helpers::TagHelper
-  
+      
     TestServer = "http://iut-service.hrs.com:8080"
     ProductionServer = "http://p-service.hrs.com:8080"
     Settings = open("config/hrs_service.yml") {|f| YAML.load(f) }
@@ -109,30 +108,48 @@ module HRS
         searchCriterion += ct("minCategory", minCategory)
         searchCriterion += ct("maxResults", maxResults)
         
-        availCriterion = ct("from", from_date )
-        availCriterion += ct("to", to_date )
-        availCriterion += "<minPrice xmlns:xsi='...' xsi:nil='true' />"
-        availCriterion += "<maxPrice xmlns:xsi='...' xsi:nil='true' />"
-        availCriterion += ct("includeBreakfastPriceToDetermineCheapestOffer", "true")
-        availCriterion += ct("roomCriteria", ct("id", "1") + ct("roomType", roomType) + ct("adultCount", adultCount))
+        availC = availCriterion(from_date, to_date, roomType , adultCount )        
         
         orderCriterion = ct("orderKey", orderKey)
         orderCriterion += ct("orderDirection", orderDirection)
         
-        data = ct("searchCriterion", searchCriterion ) + ct("availCriterion", availCriterion ) + ct("orderCriterion", orderCriterion ) 
+        data = ct("searchCriterion", searchCriterion ) + ct("availCriterion", availC ) + ct("orderCriterion", orderCriterion ) 
         request("hotelAvail", data)[:hotel_avail_response][:hotel_avail_response][:hotel_avail_hotel_offers]
       rescue
         {}
       end
     end
+    
+    #Default hotel_key = 24346
+    def hotel_availabilty(hotel_key, from_date, to_date, roomType, adultCount)
+      begin
+        availC = availCriterion(from_date, to_date, roomType , adultCount )        
+        data = ct("hotelKeys", hotel_key)
+        data += ct("availCriterion", availC)
+        
+        request("hotelDetailAvail", data)
+      rescue
+        {}
+      end
+    end
+    
+
 
 
     private
     
-    def ct(tag, text)
-      "<#{tag}>#{text}</#{tag}>"
-    end
-
+      def ct(tag, text)
+        "<#{tag}>#{text}</#{tag}>"
+      end
+      
+      def availCriterion(from_date, to_date, roomType="single" , adultCount=1 )
+        data = ct("from", from_date )
+        data += ct("to", to_date )
+        data += "<minPrice xmlns:xsi='...' xsi:nil='true' />"
+        data += "<maxPrice xmlns:xsi='...' xsi:nil='true' />"
+        data += ct("includeBreakfastPriceToDetermineCheapestOffer", "true")
+        data += ct("roomCriteria", ct("id", "1") + ct("roomType", roomType) + ct("adultCount", adultCount))
+      end
     
   end
 end
