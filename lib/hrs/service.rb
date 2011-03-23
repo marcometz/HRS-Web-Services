@@ -6,20 +6,21 @@ module HRS
   class Service < Rails::Engine
     include ActionView::Helpers::TagHelper
   
-    HRSServiceVersion = "015"
     TestServer = "http://iut-service.hrs.com:8080"
     ProductionServer = "http://p-service.hrs.com:8080"
-    Iso3Language = "ENG"
+    Settings = open("config/hrs_service.yml") {|f| YAML.load(f) }
     
     attr_accessor :client
     attr_accessor :environment
     attr_accessor :version
+    attr_accessor :iso3language
     
     #hrs = HRS::Service.new
     
     def initialize(args={})
       self.environment = args[:env] || ::Rails.env
-      self.version = args[:version] || HRSServiceVersion
+      self.version = args[:version] || Settings["HRSServiceVersion"]
+      self.iso3language = args[:language] || Settings["Iso3Language"]
       server_path = "/service/hrs/#{self.version}/HRSService?wsdl"
       self.client = Savon::Client.new do |wsdl, http, wsse|
         case self.environment
@@ -33,35 +34,43 @@ module HRS
     
     #TODO: Static data in yaml file
     def request(procedure, data_to_send="")
-      result = client.request procedure do |soap, wsdl|        
-        client_type = content_tag("clientType", "317")
-        client_key = content_tag("clientKey", "424316692")
-        client_password = content_tag("clientPassword", "hf8t2!$3fg")
-        
-        language = content_tag("language", content_tag("iso3Language", Iso3Language))
-        iso3Country = content_tag("iso3Country", "DEU")
-        isoCurrency = content_tag("isoCurrency", "EUR")
-        
-        credentials = content_tag("credentials", client_type + client_key + client_password)
-        locale = content_tag("locale", language + iso3Country + isoCurrency)
-        
-        procedure_request = "<#{procedure}Request xmlns=''>#{credentials}#{locale}#{data_to_send}</#{procedure}Request>"
-        soap_xml = "<soap:Body><#{procedure} xmlns='com.hrs.soap.hrs'>#{procedure_request}</#{procedure}></soap:Body>"
-        soap.xml = "<soap:Envelope xmlns:soap='http://schemas.xmlsoap.org/soap/envelope/'>#{soap_xml}</soap:Envelope>"
+      begin
+        result = client.request procedure do |soap, wsdl|        
+          client_type = content_tag("clientType", Settings["ClientType"])
+          client_key = content_tag("clientKey", Settings["ClientKey"])
+          client_password = content_tag("clientPassword", Settings["ClientPassword"])
+          
+          language = content_tag("language", content_tag("iso3Language", iso3language))
+          iso3Country = content_tag("iso3Country", Settings["Iso3Country"])
+          isoCurrency = content_tag("isoCurrency", Settings["IsoCurrency"])
+          
+          credentials = content_tag("credentials", client_type + client_key + client_password)
+          locale = content_tag("locale", language + iso3Country + isoCurrency)
+          
+          procedure_request = "<#{procedure}Request xmlns=''>#{credentials}#{locale}#{data_to_send}</#{procedure}Request>"
+          soap_xml = "<soap:Body><#{procedure} xmlns='com.hrs.soap.hrs'>#{procedure_request}</#{procedure}></soap:Body>"
+          soap.xml = "<soap:Envelope xmlns:soap='http://schemas.xmlsoap.org/soap/envelope/'>#{soap_xml}</soap:Envelope>"
+        end
+      rescue
+        nil
       end
     end
     
     
     def ping
-      data = content_tag("echoData", "Are you alive")
-      request("ping", data)
+      begin
+        data = content_tag("echoData", "I am alive")
+        request("ping", data).to_hash[:ping_response][:ping_response]
+      rescue
+        false
+      end
     end
     
     
     def search_locations(city)
       data = "<fuzzySearch xmlns:xsi='...' xsi:nil='true' />"
       data += content_tag("locationName", city)
-      data += content_tag("locationLanguage", content_tag("iso3Language", Iso3Language))
+      data += content_tag("locationLanguage", content_tag("iso3Language", iso3language))
       request("locationSearch", data)
     end
     

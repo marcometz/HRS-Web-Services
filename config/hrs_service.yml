@@ -1,4 +1,8 @@
 #HRS AuthData
-clientType: "123"
-clientKey: "1234567
-clientPassword: "asdf123asdf"
+ClientType: "123"
+ClientKey: "1234567"
+ClientPassword: "asdf123asdf"
+HRSServiceVersion: "015"
+Iso3Language: "ENG"
+IsoCurrency: "DEU"
+Iso3Country: "EUR"

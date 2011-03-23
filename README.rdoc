@@ -13,6 +13,9 @@ Your Webservers IP has to be registered at HRS. Send a mail to support@hrs.com
 
 To initialize a new Service
 	hrs = HRS::Service.new
+	
+copy config/hrs_service.yml to yout config dir
+Update hrs_service.yml with your HRS-DATA
 
 This will start a new Service with your current Rails Environment ("production" || "development/test")
 on the different HRS Servers 
@@ -27,6 +30,7 @@ with args folloing Options:
 	
 	:env	   	=> which Server to use (production or test)
 	:version	=> which version of WebService you want to use (Default "015" - 01.03.2011 )
+	:language 	=> overwrite default Iso3Language (default => "ENG")
 	...
 	
 Methods:
