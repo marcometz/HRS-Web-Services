@@ -14,8 +14,9 @@ Your Webservers IP has to be registered at HRS. Send a mail to support@hrs.com
 To initialize a new Service
 	hrs = HRS::Service.new
 	
-copy config/hrs_service.yml to yout config dir
 Update hrs_service.yml with your HRS-DATA
+	copy config/hrs_service.yml to your config dir and modify it
+
 
 This will start a new Service with your current Rails Environment ("production" || "development/test")
 on the different HRS Servers 
@@ -35,12 +36,16 @@ with args folloing Options:
 	
 Methods:
 
-	hrs.ping  =>  Savon::SOAP::Response 	if Connection to HRS ist established and ready to use
+To check if a connection to HRS ist established and ready to use:
+	hrs.ping  =>  Savon::SOAP::Response 	
 	
-	hrs.search_locations("Berlin")  =>  list of locations like 
-		{:location_type=>"city", :location_name=>"Berlin", :location_language=>{:iso3_language=>"eng", :variant_iso3_country=>nil}, :iso3_country=>"deu", :location_id=>"55133", :poi_id=>nil, :geo_position=>{:latitude=>"52.51628", :longitude=>"13.3776"}}
+Get a list of locations like: 	
+	hrs.search_locations("Berlin") => {:location_type=>"city", :location_name=>"Berlin", :location_language=>{:iso3_language=>"eng", :variant_iso3_country=>nil}, :iso3_country=>"deu", :location_id=>"55133", :poi_id=>nil, :geo_position=>{:latitude=>"52.51628", :longitude=>"13.3776"}}
+		
 	hrs.search_locations("Hauptstrasse 12, Berlin") => Location search by Address
 
+Search for all Hotels nearby a location (Access may be restricted):
 	hrs.search_hotels(location_id, perimeter=1000, maxResults=0, minAverageRating=0, minCategory=0)
 	
+Get available Hotels for a location and a time span:
 	hrs.available_hotels(location_id, from_date, to_date, perimeter=1000, maxResults=0, minCategory=0, roomType="single", adultCount=1, orderKey="price", orderDirection="ascending" )  => with from_date, to_date format of "2011-12-30"
