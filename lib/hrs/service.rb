@@ -68,12 +68,34 @@ module HRS
     
     
     def search_locations(city)
-      data = "<fuzzySearch xmlns:xsi='...' xsi:nil='true' />"
-      data += content_tag("locationName", city)
-      data += content_tag("locationLanguage", content_tag("iso3Language", iso3language))
-      request("locationSearch", data)
+      begin
+        data = "<fuzzySearch xmlns:xsi='...' xsi:nil='true' />"
+        data += content_tag("locationName", city)
+        data += content_tag("locationLanguage", content_tag("iso3Language", iso3language))
+        request("locationSearch", data).to_hash[:location_search_response][:location_search_response][:locations]
+      rescue
+        {}
+      end
     end
     
+    #Default location_id for Berlin = 55133
+    def search_hotels(location_id)
+      begin
+        locationCriterion = "<fuzzySearch xmlns:xsi='...' xsi:nil='true' />"
+        locationCriterion += content_tag("locationID", location_id)
+        locationCriterion += content_tag("perimeter", 1000)
+        
+        searchCriterion = content_tag("locationCriterion", locationCriterion) 
+        searchCriterion += content_tag("hotelNames", "")
+        searchCriterion += content_tag("minCategory", "0")
+        searchCriterion += content_tag("minAverageRating", "0")
+        searchCriterion += content_tag("maxResults", "0")
+        data = content_tag("searchCriterion", searchCriterion )
+        request("hotelSearch", data)
+      rescue
+        {}
+      end
+    end
     
   end
 end
