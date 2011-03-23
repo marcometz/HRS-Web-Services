@@ -36,7 +36,11 @@ with args folloing Options:
 Methods:
 
 	hrs.ping  =>  Savon::SOAP::Response 	if Connection to HRS ist established and ready to use
+	
 	hrs.search_locations("Berlin")  =>  list of locations like 
 		{:location_type=>"city", :location_name=>"Berlin", :location_language=>{:iso3_language=>"eng", :variant_iso3_country=>nil}, :iso3_country=>"deu", :location_id=>"55133", :poi_id=>nil, :geo_position=>{:latitude=>"52.51628", :longitude=>"13.3776"}}
 	hrs.search_locations("Hauptstrasse 12, Berlin") => Location search by Address
 
+	hrs.search_hotels(location_id, perimeter=1000, maxResults=0, minAverageRating=0, minCategory=0)
+	
+	hrs.available_hotels(location_id, from_date, to_date, perimeter=1000, maxResults=0, minCategory=0, roomType="single", adultCount=1, orderKey="price", orderDirection="ascending" )  => with from_date, to_date format of "2011-12-30"
